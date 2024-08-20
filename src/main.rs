@@ -25,11 +25,25 @@ fn resizee(imge: &Image, new_dim: (u32, u32)) -> Image {
 }
 
 
+fn blurrify(img: &DynamicImage, new_dim: (u32, u32)) -> Image{
+    let old_dim = imge.dimensions();
+    let imge = imge.to_rgba();
+
+    let small = resize(&imge, ((old_dim.0 / new_dim.0), (old_dim.1 / new_dim.1)));
+    small.save("bluer-small.png"),unwrap();
+
+
+    let blurry = resizee(&small, old_dim);
+    blurry.save("blurrr-pixellated.png").unwrap();
+    blurry
+}
+
 fn main()  -> Result <(), Box<dyn std::error::Error>>{
     
     let imge: ImageReader<BufReader<File>> = ImageReader::open("Capture.png")?.decode()?;
-    let (width, height) = imge.dimensions();
+    
+    let imge_ = blurrify(&imge, (50, 50));
 
-    println!("({}, {})", width, height);
+    let _ = imge_.save("Blurred.png");
     Ok(())
 }
