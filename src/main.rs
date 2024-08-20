@@ -13,7 +13,7 @@ fn resizee(imge: &Image, new_dim: (u32, u32)) -> Image {
     let (old_width, old_height) = img.dimensions();
     let (new_width, new_height) = new_dim;
 
-    let resized = ImagBuffer::new(mew_width, new_height);
+    let mut resized = ImagBuffer::new(mew_width, new_height);
     for (new_x, new_y, pixel) in  resized.enumerate_pixels_mut(){
         *pixel = *old_pixel;
     if Some(old_pixel) = imge.get_pixel_checked(old_x, old_y){
